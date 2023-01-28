@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -10,10 +11,20 @@ class WebViewAndroid extends StatefulWidget {
 
 class _WebViewAndroidState extends State<WebViewAndroid> {
   WebViewController? _controller;
+  var _connection = 'unknown';
 
   @override
   void initState() {
     super.initState();
+
+    // Check for internet connection
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      setState(() {
+        _connection = result.toString();
+      });
+    });
+
+    // Define the webview parameters
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
