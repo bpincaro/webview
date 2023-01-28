@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebViewAndroid extends StatefulWidget {
   const WebViewAndroid({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _WebViewAndroidState extends State<WebViewAndroid> {
     // Define the webview parameters
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
+      ..setBackgroundColor(const Color(0xFFFFC107))
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
@@ -37,10 +38,12 @@ class _WebViewAndroidState extends State<WebViewAndroid> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if(request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
+            // Define the URL to be used on the Webview
+            if(request.url.startsWith('https://jornalstrada.com/')) {
+              return NavigationDecision.navigate;
             }
-            return NavigationDecision.navigate;
+            launchUrl(Uri.parse(request.url)); // open url in the default device browser
+            return NavigationDecision.prevent;
           },
         ),
       )

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primarySwatch: Colors.amber,
       ),
       home: const WebViewAndroid(),
     );
